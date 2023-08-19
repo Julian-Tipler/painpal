@@ -1,13 +1,55 @@
-import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
-import { Text, View } from "../../components/Themed";
+import { View } from "../../components/Themed";
+import { Prompt } from "./Prompt";
+import { useEffect, useState } from "react";
+import { SurveyProvider, useSurveyContext } from "./SurveyContext";
+import { Button } from "react-native-paper";
+import { mockPrompts } from "./mockPrompts";
 
-export default function SurveyScreen() {
+export function Survey() {
+  const [promptIndex, setPromptIndex] = useState(0);
+  const { prompts, setPrompts } = useSurveyContext();
+
+  useEffect(() => {
+    setPrompts(mockPrompts);
+  }, []);
+
+  const handleNavigateForward = () => {
+    setPromptIndex((prevIndex) => (prevIndex += 1));
+  };
+
+  const handleNavigateBackward = () => {
+    if (promptIndex === 0) {
+      setPromptIndex(0);
+    } else {
+      setPromptIndex(promptIndex - 1);
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
-    </View>
+    <SurveyProvider>
+      <View style={styles.container}>
+        <Prompt prompt={prompts[promptIndex]} setPromptIndex={setPromptIndex} />
+      </View>
+      {/* Previous and Next */}
+      <View style={styles.navigationContainer}>
+        <Button
+          mode="contained"
+          style={styles.navigationButton}
+          onPress={handleNavigateForward}
+        >
+          Back
+        </Button>
+        <Button
+          mode="contained"
+          style={styles.navigationButton}
+          onPress={handleNavigateBackward}
+        >
+          Next
+        </Button>
+      </View>
+    </SurveyProvider>
   );
 }
 
@@ -16,14 +58,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  navigationContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    flexShrink: 0,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  navigationButton: {
+    backgroundColor: "lightblue",
+    textAlign: "center",
+    marginBottom: 20,
   },
 });
