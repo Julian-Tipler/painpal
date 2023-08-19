@@ -1,30 +1,21 @@
 // We are doing this with one question
 
-export type Prompt = {
-  id: string;
-  question: string;
-  options: string[];
-  style: PromptStyle;
-  dependsValue?: string;
-  followUpQuestions?: Prompt[];
-};
+import { Prompt } from "../../entities/prompt";
 
-export type PromptStyle = "single" | "multiple";
-
-const promptSingle: Prompt = {
+const prompt: Prompt = {
   id: "123",
   question: "Did you exercise today",
   options: ["yes", "no"],
-  style: "single",
+  type: "single",
   followUpQuestions: [
     {
       id: "456",
       question: "What exercise did you do?",
       options: ["run", "bike", "swim"],
-      style: "multiple",
+      type: "multiple",
       dependsValue: "yes",
     },
   ],
 };
 
-export const mockPrompts = [promptSingle];
+export const mockPrompts = [prompt];
