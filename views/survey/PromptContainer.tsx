@@ -1,22 +1,32 @@
 import { StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
 import { Prompt } from "../../entities/prompt";
+import { useSurveyContext } from "./SurveyContext";
+import { Answer } from "../../entities/Answer";
 
 export function PromptContainer({ prompt }: { prompt: Prompt }) {
+  const { answers } = useSurveyContext();
   const promptsDisplayed: Prompt[] = [];
 
-  let i = 0;
+  const recursivelyDisplayPrompts = (prompt: Prompt, parentId?: string) => {
+    // First push the current prompt
+    promptsDisplayed.push(prompt);
+    if (!prompt.followUpPrompts) return;
 
-  const recursivelyDisplayPrompts = (prompts: Prompt[]) => {
-    prompts.forEach((prompt: Prompt) => {
-      promptsDisplayed.push(prompt);
-      prompt.followUpQuestions &&
-        recursivelyDisplayPrompts([...prompt.followUpQuestions]);
+    const promptAnswer = answers.filter((answer: Answer) => {
+      return answer.promptId === prompt.id;
+    })[0];
+
+    console.log("promptAnswer", promptAnswer);
+
+    prompt.followUpPrompts.forEach((followUpPrompt: Prompt) => {
+      if (!followUpPrompt.dependsValue) return;
+      if (promptAnswer.options.includes(followUpPrompt.dependsValue))
+        recursivelyDisplayPrompts(followUpPrompt, prompt.id);
     });
-    //This part below will also have to check if the question is answered with the trigger answer
   };
 
-  recursivelyDisplayPrompts([prompt]);
+  recursivelyDisplayPrompts(prompt);
   if (promptsDisplayed.length < 1) return <View>No prompts</View>;
   return (
     <>

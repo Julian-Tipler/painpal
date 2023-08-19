@@ -1,4 +1,4 @@
-import { Option } from "./prompt";
+import { Option } from "./Prompt";
 
 export type Answer = {
   id: string;

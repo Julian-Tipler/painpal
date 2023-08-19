@@ -4,7 +4,7 @@ export type Prompt = {
   options: Option[];
   type: PromptType;
   dependsValue?: string;
-  followUpQuestions?: Prompt[];
+  followUpPrompts?: Prompt[];
 };
 
 export type PromptType = "single" | "multiple" | "yesNo";
