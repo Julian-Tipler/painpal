@@ -1,13 +1,13 @@
-import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet } from "react-native";
-
-import EditScreenInfo from "../components/EditScreenInfo";
-import { Text, View } from "../components/Themed";
-import { Prompt } from "../views/survey/Prompt";
+import { StyleSheet } from "react-native";
 import { Survey } from "../views/survey/Survey";
+import { SurveyProvider } from "../views/survey/SurveyContext";
 
 export default function SurveyScreen() {
-  return <Survey />;
+  return (
+    <SurveyProvider>
+      <Survey />;
+    </SurveyProvider>
+  );
 }
 
 const styles = StyleSheet.create({});

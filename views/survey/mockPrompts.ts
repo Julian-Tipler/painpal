@@ -18,4 +18,11 @@ const prompt: Prompt = {
   ],
 };
 
-export const mockPrompts = [prompt];
+const promptTwo: Prompt = {
+  id: "123",
+  question: "Did you exercise today",
+  options: ["yes", "no"],
+  type: "single",
+};
+
+export const mockPrompts = [prompt,promptTwo];

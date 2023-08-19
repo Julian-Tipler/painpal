@@ -15,7 +15,7 @@ type SurveyContextChildren = {
 export function SurveyProvider({ children }: { children: React.ReactNode }) {
   const [prompts, setPrompts] = useState([]); // Will be fetched by a useEffect + firebase
   const [answers, setAnswers] = useState([]); // Initialize answers as an empty object
-  
+  console.log("context",prompts)
   const value = { prompts, setPrompts, answers, setAnswers };
   return (
     <SurveyContext.Provider value={value}>{children}</SurveyContext.Provider>

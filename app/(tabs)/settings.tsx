@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 import { Text, View } from "../../components/Themed";
-import { Prompt } from "../../views/survey/Prompt";
+import { Prompt } from "../../views/survey/PromptContainer";
 
 export default function SettingsScreen() {
   return (
