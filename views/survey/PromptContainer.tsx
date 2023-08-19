@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
-import { Prompt } from "../../entities/prompt";
+import { Prompt } from "../../entities/Prompt";
 import { useSurveyContext } from "./SurveyContext";
 import { Answer } from "../../entities/Answer";
 

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { mockPrompts } from "./mockPrompts";
-import { Prompt } from "../../entities/prompt";
+import { Prompt } from "../../entities/Prompt";
 import { Answer } from "../../entities/Answer";
 
 const SurveyContext = createContext({} as SurveyContextChildren);

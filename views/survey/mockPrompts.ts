@@ -1,6 +1,6 @@
 // We are doing this with one question
 
-import { Prompt } from "../../entities/prompt";
+import { Prompt } from "../../entities/Prompt";
 
 const prompt: Prompt = {
   id: "123",
