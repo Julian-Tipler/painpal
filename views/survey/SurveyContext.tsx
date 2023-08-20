@@ -4,24 +4,23 @@ import { Answer } from "../../entities/Answer";
 
 const SurveyContext = createContext({} as SurveyContextChildren);
 
+export type AnswerWithoutId = Omit<Answer, "id">;
+
 type SurveyContextChildren = {
   prompts: Prompt[];
   setPrompts: React.Dispatch<React.SetStateAction<Prompt[]>>;
-  answers: Answer[];
-  setAnswers: React.Dispatch<React.SetStateAction<Answer[]>>;
+  answers: { [promptId: string]: AnswerWithoutId };
+  setAnswers: React.Dispatch<
+    React.SetStateAction<{ [promptId: string]: AnswerWithoutId }>
+  >;
 };
 
 export function SurveyProvider({ children }: { children: React.ReactNode }) {
   const [prompts, setPrompts] = useState([]); // Will be fetched by a useEffect + firebase
-  const [answers, setAnswers] = useState([
-    { id: "445", promptId: "123", options: ["no"] },
-    { id: "667", promptId: "456", options: ["swim"] },
-    { id: "889", promptId: "890", options: ["freestyle"] },
-  ]); // Initialize answers as an empty object
-  console.log("prompts", prompts);
-  console.log("answers", answers)
+  const [answers, setAnswers] = useState({}); // Initialize answers as an empty array
+
   const value = { prompts, setPrompts, answers, setAnswers };
-  return (  
+  return (
     <SurveyContext.Provider value={value}>{children}</SurveyContext.Provider>
   );
 }

@@ -2,34 +2,37 @@ import { Button } from "react-native-paper";
 import { Text, View } from "../../../components/Themed";
 import { useSurveyContext } from "../SurveyContext";
 import { StyleSheet } from "react-native";
+import { Prompt } from "../../../entities/Prompt";
 
-export const Multiple = ({ options, id }: { options: any; id: string }) => {
-  const { responses, setResponses } = useSurveyContext();
+export const Multiple = ({ prompt }: { prompt: Prompt }) => {
+  const { answers, setAnswers } = useSurveyContext();
 
   return (
-    <View style={styles.optionContainer}>
-      {options.map((selection: any, i: number) => (
-        <Button
-          mode="contained"
-          style={styles.singleSelectionButton}
-          key={`option ${i}`}
-          onPress={() =>
-            setResponses((prevAnswers: any) => {
-              const currentAnswers = prevAnswers[id] || []; // Initialize with an empty array if undefined
-              if (!currentAnswers.includes(selection.text)) {
-                const updatedAnswers = {
+    <View>
+      <Text>{prompt.question}</Text>
+      {prompt.options.map((option, i) => {
+        return (
+          <Button
+            key={`button-${i}`}
+            onPress={() => {
+              setAnswers((prevAnswers) => {
+                // Makes sure each answer only appears once
+                const prevOptions = prevAnswers[prompt.id]?.options || [];
+                const newOptions = [...new Set([...prevOptions, option])];
+                return {
                   ...prevAnswers,
-                  [id]: [...currentAnswers, selection.text],
+                  [prompt.id]: {
+                    promptId: prompt.id,
+                    options: newOptions,
+                  },
                 };
-                return updatedAnswers;
-              }
-              return prevAnswers;
-            })
-          }
-        >
-          <Text>{selection.text}</Text>
-        </Button>
-      ))}
+              });
+            }}
+          >
+            {option}
+          </Button>
+        );
+      })}
     </View>
   );
 };

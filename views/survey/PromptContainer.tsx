@@ -1,65 +1,66 @@
 import { StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
 import { Prompt } from "../../entities/Prompt";
-import { useSurveyContext } from "./SurveyContext";
+import { AnswerWithoutId, useSurveyContext } from "./SurveyContext";
 import { Answer } from "../../entities/Answer";
+import { Button } from "react-native-paper";
+import { YesNo } from "./Inputs/YesNo";
+import { Multiple } from "./Inputs/Multiple";
 
 export function PromptContainer({ prompt }: { prompt: Prompt }) {
-  const { answers } = useSurveyContext();
+  const { answers, setAnswers } = useSurveyContext();
   const promptsDisplayed: Prompt[] = [];
 
   const recursivelyDisplayPrompts = (prompt: Prompt, parentId?: string) => {
     // First push the current prompt
     promptsDisplayed.push(prompt);
+
     if (!prompt.followUpPrompts) return;
 
-    const promptAnswer = answers.filter((answer: Answer) => {
-      return answer.promptId === prompt.id;
-    })[0];
-
-    console.log("promptAnswer", promptAnswer);
+    const promptAnswer = Object.values(answers).filter(
+      (answer: AnswerWithoutId) => {
+        return answer.promptId === prompt.id;
+      }
+    )[0];
+    if (!promptAnswer) return;
 
     prompt.followUpPrompts.forEach((followUpPrompt: Prompt) => {
       if (!followUpPrompt.dependsValue) return;
-      if (promptAnswer.options.includes(followUpPrompt.dependsValue))
+      if (promptAnswer.options.includes(followUpPrompt.dependsValue)) {
         recursivelyDisplayPrompts(followUpPrompt, prompt.id);
+      }
     });
   };
 
   recursivelyDisplayPrompts(prompt);
   if (promptsDisplayed.length < 1) return <View>No prompts</View>;
+
   return (
-    <>
-      {promptsDisplayed.map((promptDisplayed) => {
-        return (
-          <View>
-            <Text>{promptDisplayed.question}</Text>
-          </View>
-        );
+    <View style={styles.content}>
+      {promptsDisplayed.map((promptDisplayed, i) => {
+        return displayPrompt(promptDisplayed, i);
       })}
-    </>
+    </View>
   );
 }
+
+const displayPrompt = (prompt: Prompt, i: number) => {
+  switch (prompt.type) {
+    case "yesNo":
+      return <YesNo prompt={prompt} key={`prompt-${i}`} />;
+    case "multiple":
+      return <Multiple prompt={prompt} key={`prompt-${i}`} />;
+  }
+};
 
 const styles = StyleSheet.create({
   content: {
     flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
     width: "100%",
   },
   question: {
     alignSelf: "center",
-  },
-  navigationContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    flexShrink: 0,
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
-  navigationButton: {
-    backgroundColor: "lightblue",
-    textAlign: "center",
-    marginBottom: 20,
   },
 });

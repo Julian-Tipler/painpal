@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { View } from "../../components/Themed";
 import { PromptContainer } from "./PromptContainer";
 import { useEffect, useState } from "react";
-import { SurveyProvider, useSurveyContext } from "./SurveyContext";
+import { useSurveyContext } from "./SurveyContext";
 import { Button } from "react-native-paper";
 import { mockPrompts } from "./mockPrompts";
 
@@ -19,7 +19,6 @@ export function Survey() {
       return;
     } else {
       setPromptIndex((prevIndex) => {
-        console.log(prevIndex);
         return (prevIndex += 1);
       });
     }
@@ -35,12 +34,12 @@ export function Survey() {
 
   if (!prompts.length) return null;
 
+  const prompt = prompts[promptIndex];
   return (
     <>
-      <View style={styles.container}>
-        <PromptContainer prompt={prompts[promptIndex]} />
-      </View>
-      {/* Previous and Next */}
+      {/* Prompt */}
+      <PromptContainer prompt={prompt} />
+      {/* Previous and Next Buttons*/}
       <View style={styles.navigationContainer}>
         {promptIndex > 0 ? (
           <Button
@@ -66,12 +65,6 @@ export function Survey() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-  },
   navigationContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

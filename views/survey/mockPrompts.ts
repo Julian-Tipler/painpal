@@ -6,7 +6,7 @@ const prompt: Prompt = {
   id: "123",
   question: "Did you exercise today",
   options: ["yes", "no"],
-  type: "single",
+  type: "yesNo",
   followUpPrompts: [
     {
       id: "456",
