@@ -14,15 +14,8 @@ export function Survey() {
   useEffect(() => {
     setPrompts(mockPrompts);
   }, []);
-  const handleNavigateForward = () => {
-    if (promptIndex === prompts.length - 1) {
-      return;
-    } else {
-      setPromptIndex((prevIndex) => {
-        return (prevIndex += 1);
-      });
-    }
-  };
+
+  if (!prompts || !prompts.length) return null;
 
   const handleNavigateBackward = () => {
     if (promptIndex === 0) {
@@ -32,7 +25,15 @@ export function Survey() {
     }
   };
 
-  if (!prompts.length) return null;
+  const handleNavigateForward = () => {
+    if (promptIndex === prompts.length - 1) {
+      return;
+    } else {
+      setPromptIndex((prevIndex) => {
+        return (prevIndex += 1);
+      });
+    }
+  };
 
   const prompt = prompts[promptIndex];
   return (

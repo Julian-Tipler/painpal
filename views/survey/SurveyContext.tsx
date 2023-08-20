@@ -9,9 +9,9 @@ export type AnswerWithoutId = Omit<Answer, "id">;
 
 type SurveyContextChildren = {
   survey: Survey | null;
-  setSurvey: React.Dispatch<React.SetStateAction<Survey>>;
+  setSurvey: React.Dispatch<React.SetStateAction<Survey | null>>;
   prompts: Prompt[] | null;
-  setPrompts: React.Dispatch<React.SetStateAction<Prompt[]>>;
+  setPrompts: React.Dispatch<React.SetStateAction<Prompt[] | null>>;
   answers: { [promptId: string]: AnswerWithoutId };
   setAnswers: React.Dispatch<
     React.SetStateAction<{ [promptId: string]: AnswerWithoutId }>
@@ -25,7 +25,14 @@ export function SurveyProvider({ children }: { children: React.ReactNode }) {
     [promptId: string]: AnswerWithoutId;
   }>({}); // Initialize answers as an empty array
 
-  const value = { prompts, setPrompts, answers, setAnswers, survey, setSurvey };
+  const value = {
+    prompts,
+    setPrompts,
+    answers,
+    setAnswers,
+    survey,
+    setSurvey,
+  };
   return (
     <SurveyContext.Provider value={value}>{children}</SurveyContext.Provider>
   );
