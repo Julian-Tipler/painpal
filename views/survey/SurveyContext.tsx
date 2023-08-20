@@ -8,9 +8,9 @@ const SurveyContext = createContext({} as SurveyContextChildren);
 export type AnswerWithoutId = Omit<Answer, "id">;
 
 type SurveyContextChildren = {
-  survey: Survey;
+  survey: Survey | null;
   setSurvey: React.Dispatch<React.SetStateAction<Survey>>;
-  prompts: Prompt[];
+  prompts: Prompt[] | null;
   setPrompts: React.Dispatch<React.SetStateAction<Prompt[]>>;
   answers: { [promptId: string]: AnswerWithoutId };
   setAnswers: React.Dispatch<
@@ -19,9 +19,11 @@ type SurveyContextChildren = {
 };
 
 export function SurveyProvider({ children }: { children: React.ReactNode }) {
-  const [prompts, setPrompts] = useState([]); // Will be fetched by a useEffect + firebase
-  const [answers, setAnswers] = useState({}); // Initialize answers as an empty array
-  const [survey, setSurvey] = useState({});
+  const [survey, setSurvey] = useState<Survey | null>(null);
+  const [prompts, setPrompts] = useState<Prompt[] | null>(null); // Will be fetched by a useEffect + firebase
+  const [answers, setAnswers] = useState<{
+    [promptId: string]: AnswerWithoutId;
+  }>({}); // Initialize answers as an empty array
 
   const value = { prompts, setPrompts, answers, setAnswers, survey, setSurvey };
   return (
