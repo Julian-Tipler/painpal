@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { View } from "../../components/Themed";
 import { Prompt } from "../../entities/Prompt";
 import { useSurveyContext } from "./SurveyContext";
-import { SinglePrompt } from "./OptionContainer/SinglePrompt";
+import { SinglePrompt } from "./SinglePrompt/SinglePrompt";
 
 export function DisplayPrompts({ prompt }: { prompt: Prompt }) {
   const { answers, setAnswers } = useSurveyContext();
@@ -29,22 +29,12 @@ export function DisplayPrompts({ prompt }: { prompt: Prompt }) {
   if (promptsDisplayed.length < 1) return <View>No prompts</View>;
 
   return (
-    <View style={styles.content}>
+    <>
       {promptsDisplayed.map((promptDisplayed, i) => {
         return <SinglePrompt prompt={promptDisplayed} key={`option-${i}`} />;
       })}
-    </View>
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    width: "100%",
-  },
-  question: {
-    alignSelf: "center",
-  },
-});
+const styles = StyleSheet.create({});

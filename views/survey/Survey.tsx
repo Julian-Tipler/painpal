@@ -43,7 +43,9 @@ export function Survey() {
   return (
     <>
       {/* Prompt */}
-      <DisplayPrompts prompt={prompt} />
+      <View style={styles.content}>
+        <DisplayPrompts prompt={prompt} />
+      </View>
       {/* Previous and Next Buttons*/}
       <View style={styles.navigationContainer}>
         {promptIndex > 0 ? (
@@ -78,6 +80,12 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     height: 100,
+  },
+  content: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: "100%",
   },
   navigationButton: {},
 });
