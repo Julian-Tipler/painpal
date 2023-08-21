@@ -38,9 +38,9 @@ const prompt: Prompt = {
 // multiple Prompt ids and required answer for each one. Not for MVP though
 
 const promptTwo: Prompt = {
-  id: "123",
-  question: "Did you exercise today",
-  options: ["yes", "no"],
+  id: "234",
+  question: "Where is your pain",
+  options: ["head", "stomach", "back"],
   type: "single",
 };
 

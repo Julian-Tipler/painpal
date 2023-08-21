@@ -1,13 +1,10 @@
 import { StyleSheet } from "react-native";
-import { Text, View } from "../../components/Themed";
+import { View } from "../../components/Themed";
 import { Prompt } from "../../entities/Prompt";
-import { AnswerWithoutId, useSurveyContext } from "./SurveyContext";
-import { Answer } from "../../entities/Answer";
-import { Button } from "react-native-paper";
-import { YesNo } from "./Inputs/YesNo";
-import { Multiple } from "./Inputs/Multiple";
+import { useSurveyContext } from "./SurveyContext";
+import { SinglePrompt } from "./OptionContainer/SinglePrompt";
 
-export function PromptContainer({ prompt }: { prompt: Prompt }) {
+export function DisplayPrompts({ prompt }: { prompt: Prompt }) {
   const { answers, setAnswers } = useSurveyContext();
   const promptsDisplayed: Prompt[] = [];
 
@@ -17,16 +14,12 @@ export function PromptContainer({ prompt }: { prompt: Prompt }) {
 
     if (!prompt.followUpPrompts) return;
 
-    const promptAnswer = Object.values(answers).filter(
-      (answer: AnswerWithoutId) => {
-        return answer.promptId === prompt.id;
-      }
-    )[0];
-    if (!promptAnswer) return;
+    const promptAnswer = answers[prompt.id];
+    if (!promptAnswer || !promptAnswer.length) return;
 
     prompt.followUpPrompts.forEach((followUpPrompt: Prompt) => {
       if (!followUpPrompt.dependsValue) return;
-      if (promptAnswer.options.includes(followUpPrompt.dependsValue)) {
+      if (promptAnswer.includes(followUpPrompt.dependsValue)) {
         recursivelyDisplayPrompts(followUpPrompt, prompt.id);
       }
     });
@@ -38,20 +31,11 @@ export function PromptContainer({ prompt }: { prompt: Prompt }) {
   return (
     <View style={styles.content}>
       {promptsDisplayed.map((promptDisplayed, i) => {
-        return displayPrompt(promptDisplayed, i);
+        return <SinglePrompt prompt={promptDisplayed} key={`option-${i}`} />;
       })}
     </View>
   );
 }
-
-const displayPrompt = (prompt: Prompt, i: number) => {
-  switch (prompt.type) {
-    case "yesNo":
-      return <YesNo prompt={prompt} key={`prompt-${i}`} />;
-    case "multiple":
-      return <Multiple prompt={prompt} key={`prompt-${i}`} />;
-  }
-};
 
 const styles = StyleSheet.create({
   content: {

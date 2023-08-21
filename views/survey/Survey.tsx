@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 import { View } from "../../components/Themed";
-import { PromptContainer } from "./PromptContainer";
+import { DisplayPrompts } from "./DisplayPrompts";
 import { useEffect, useState } from "react";
 import { useSurveyContext } from "./SurveyContext";
 import { Button } from "react-native-paper";
@@ -21,7 +21,9 @@ export function Survey() {
     if (promptIndex === 0) {
       return;
     } else {
-      setPromptIndex(promptIndex - 1);
+      setPromptIndex((prevIndex) => {
+        return (prevIndex -= 1);
+      });
     }
   };
 
@@ -35,11 +37,13 @@ export function Survey() {
     }
   };
 
+  console.log(prompts);
+
   const prompt = prompts[promptIndex];
   return (
     <>
       {/* Prompt */}
-      <PromptContainer prompt={prompt} />
+      <DisplayPrompts prompt={prompt} />
       {/* Previous and Next Buttons*/}
       <View style={styles.navigationContainer}>
         {promptIndex > 0 ? (

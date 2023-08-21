@@ -1,31 +1,36 @@
 import { Button } from "react-native-paper";
 import { Text, View } from "../../../components/Themed";
-import { useSurveyContext } from "../SurveyContext";
 import { StyleSheet } from "react-native";
+import { useSurveyContext } from "../SurveyContext";
 import { Prompt } from "../../../entities/Prompt";
 
-export const Multiple = ({ prompt }: { prompt: Prompt }) => {
+export const YesNo = ({ prompt }: { prompt: Prompt }) => {
   const { answers, setAnswers } = useSurveyContext();
 
   return (
-    <View>
+    <View style={styles.optionContainer}>
       <Text>{prompt.question}</Text>
-      {prompt.options.map((option, i) => {
+      {["yes", "no"].map((option, i) => {
         return (
           <Button
             key={`button-${i}`}
             onPress={() => {
               setAnswers((prevAnswers) => {
-                // Makes sure each answer only appears once
-                const prevOptions = prevAnswers[prompt.id]?.options || [];
-                const newOptions = [...new Set([...prevOptions, option])];
-                return {
-                  ...prevAnswers,
-                  [prompt.id]: {
-                    promptId: prompt.id,
-                    options: newOptions,
-                  },
-                };
+                const newAnswers = { ...prevAnswers };
+
+                const isSelected = prevAnswers[prompt.id]?.includes(option);
+
+                if (isSelected) {
+                  newAnswers[prompt.id] = newAnswers[prompt.id].filter(
+                    (item) => item !== option
+                  );
+                } else {
+                  newAnswers[prompt.id] = [
+                    ...(newAnswers[prompt.id] || []),
+                    option,
+                  ];
+                }
+                return newAnswers;
               });
             }}
           >
@@ -39,7 +44,6 @@ export const Multiple = ({ prompt }: { prompt: Prompt }) => {
 
 const styles = StyleSheet.create({
   optionContainer: {
-    flex: 1,
     padding: 20,
   },
   singleSelectionButton: {

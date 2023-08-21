@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { useSurveyContext } from "../SurveyContext";
 
 export const Single = ({ options, id }: { options: any; id: string }) => {
-  const { responses, setResponses } = useSurveyContext();
+  const { answers, setAnswers } = useSurveyContext();
 
   return (
     <View style={styles.optionContainer}>
@@ -14,7 +14,7 @@ export const Single = ({ options, id }: { options: any; id: string }) => {
           style={styles.singleSelectionButton}
           key={`option ${i}`}
           onPress={() =>
-            setResponses((prevAnswers: any) => {
+            setAnswers((prevAnswers: any) => {
               return { ...prevAnswers, [id]: [option.text] };
             })
           }
