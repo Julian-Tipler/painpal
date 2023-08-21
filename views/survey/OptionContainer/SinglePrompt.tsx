@@ -3,7 +3,6 @@ import { Text, View } from "../../../components/Themed";
 import { useSurveyContext } from "../SurveyContext";
 import { StyleSheet } from "react-native";
 import { Prompt } from "../../../entities/Prompt";
-import { handleOptionSelect } from "./helpers/handleOptionSelect";
 
 export const SinglePrompt = ({ prompt }: { prompt: Prompt }) => {
   const { setAnswers } = useSurveyContext();
