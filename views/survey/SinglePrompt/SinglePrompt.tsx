@@ -41,7 +41,10 @@ export const SinglePrompt = ({ prompt }: { prompt: Prompt }) => {
           <Button
             key={`button-${i}`}
             onPress={handleOptionSelect({ option })}
-            style={answers[prompt.id]?.includes(option) ? styles.selected : null}
+            style={[
+              styles.singleSelectionButton,
+              answers[prompt.id]?.includes(option) ? styles.selected : null,
+            ]}
           >
             {option}
           </Button>
@@ -57,10 +60,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   singleSelectionButton: {
-    backgroundColor: "purple",
+    backgroundColor: "blue",
     marginBottom: 20,
   },
   selected: {
-    backgroundColor: "red",
+    backgroundColor: "orange",
   },
 });
