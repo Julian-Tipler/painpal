@@ -3,6 +3,7 @@ import { Text, View } from "../../../components/Themed";
 import { useSurveyContext } from "../SurveyContext";
 import { StyleSheet } from "react-native";
 import { Prompt } from "../../../entities/Prompt";
+import { handleOptionSelect } from "./helpers/handleOptionSelect";
 
 export const Multiple = ({ prompt }: { prompt: Prompt }) => {
   const { answers, setAnswers } = useSurveyContext();
@@ -14,20 +15,7 @@ export const Multiple = ({ prompt }: { prompt: Prompt }) => {
         return (
           <Button
             key={`button-${i}`}
-            onPress={() => {
-              setAnswers((prevAnswers) => {
-                // Makes sure each answer only appears once
-                const prevOptions = prevAnswers[prompt.id]?.options || [];
-                const newOptions = [...new Set([...prevOptions, option])];
-                return {
-                  ...prevAnswers,
-                  [prompt.id]: {
-                    promptId: prompt.id,
-                    options: newOptions,
-                  },
-                };
-              });
-            }}
+            onPress={handleOptionSelect({ prompt, setAnswers, option })}
           >
             {option}
           </Button>

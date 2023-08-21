@@ -10,32 +10,34 @@ export const YesNo = ({ prompt }: { prompt: Prompt }) => {
   return (
     <View style={styles.optionContainer}>
       <Text>{prompt.question}</Text>
-      <Button
-        onPress={() => {
-          setAnswers((prevAnswers) => ({
-            ...prevAnswers,
-            [prompt.id]: {
-              promptId: prompt.id,
-              options: ["yes"],
-            },
-          }));
-        }}
-      >
-        Yes
-      </Button>
-      <Button
-        onPress={() => {
-          setAnswers((prevAnswers) => ({
-            ...prevAnswers,
-            [prompt.id]: {
-              promptId: prompt.id,
-              options: ["no"],
-            },
-          }));
-        }}
-      >
-        No
-      </Button>
+      {["yes", "no"].map((option, i) => {
+        return (
+          <Button
+            key={`button-${i}`}
+            onPress={() => {
+              setAnswers((prevAnswers) => {
+                const newAnswers = { ...prevAnswers };
+
+                const isSelected = prevAnswers[prompt.id]?.includes(option);
+
+                if (isSelected) {
+                  newAnswers[prompt.id] = newAnswers[prompt.id].filter(
+                    (item) => item !== option
+                  );
+                } else {
+                  newAnswers[prompt.id] = [
+                    ...(newAnswers[prompt.id] || []),
+                    option,
+                  ];
+                }
+                return newAnswers;
+              });
+            }}
+          >
+            {option}
+          </Button>
+        );
+      })}
     </View>
   );
 };

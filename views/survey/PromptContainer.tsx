@@ -17,16 +17,12 @@ export function PromptContainer({ prompt }: { prompt: Prompt }) {
 
     if (!prompt.followUpPrompts) return;
 
-    const promptAnswer = Object.values(answers).filter(
-      (answer: AnswerWithoutId) => {
-        return answer.promptId === prompt.id;
-      }
-    )[0];
-    if (!promptAnswer) return;
+    const promptAnswer = answers[prompt.id];
+    if (!promptAnswer || !promptAnswer.length) return;
 
     prompt.followUpPrompts.forEach((followUpPrompt: Prompt) => {
       if (!followUpPrompt.dependsValue) return;
-      if (promptAnswer.options.includes(followUpPrompt.dependsValue)) {
+      if (promptAnswer.includes(followUpPrompt.dependsValue)) {
         recursivelyDisplayPrompts(followUpPrompt, prompt.id);
       }
     });
