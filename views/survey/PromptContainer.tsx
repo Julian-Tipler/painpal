@@ -4,8 +4,8 @@ import { Prompt } from "../../entities/Prompt";
 import { AnswerWithoutId, useSurveyContext } from "./SurveyContext";
 import { Answer } from "../../entities/Answer";
 import { Button } from "react-native-paper";
-import { YesNo } from "./Inputs/YesNo";
-import { Multiple } from "./Inputs/Multiple";
+import { YesNo } from "./OptionContainer/YesNo";
+import { Multiple } from "./OptionContainer/Multiple";
 
 export function PromptContainer({ prompt }: { prompt: Prompt }) {
   const { answers, setAnswers } = useSurveyContext();

@@ -21,7 +21,9 @@ export function Survey() {
     if (promptIndex === 0) {
       return;
     } else {
-      setPromptIndex(promptIndex - 1);
+      setPromptIndex((prevIndex) => {
+        return (prevIndex -= 1);
+      });
     }
   };
 
@@ -34,6 +36,8 @@ export function Survey() {
       });
     }
   };
+
+  console.log(prompts);
 
   const prompt = prompts[promptIndex];
   return (

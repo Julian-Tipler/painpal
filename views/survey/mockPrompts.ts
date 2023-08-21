@@ -14,23 +14,23 @@ const prompt: Prompt = {
       options: ["run", "bike", "swim"],
       type: "multiple",
       dependsValue: "yes",
-      followUpPrompts: [
-        {
-          id: "890",
-          question: "What stroke?",
-          options: ["breast", "freestyle"],
-          type: "multiple",
-          dependsValue: "swim",
-        },
-      ],
+      // followUpPrompts: [
+      //   {
+      //     id: "890",
+      //     question: "What stroke?",
+      //     options: ["breast", "freestyle"],
+      //     type: "multiple",
+      //     dependsValue: "swim",
+      //   },
+      // ],
     },
-    {
-      id: "789",
-      question: "Why not?",
-      options: ["tired", "busy"],
-      type: "multiple",
-      dependsValue: "no",
-    },
+    // {
+    //   id: "789",
+    //   question: "Why not?",
+    //   options: ["tired", "busy"],
+    //   type: "multiple",
+    //   dependsValue: "no",
+    // },
   ],
 };
 
@@ -38,9 +38,9 @@ const prompt: Prompt = {
 // multiple Prompt ids and required answer for each one. Not for MVP though
 
 const promptTwo: Prompt = {
-  id: "123",
-  question: "Did you exercise today",
-  options: ["yes", "no"],
+  id: "234",
+  question: "Where is your pain",
+  options: ["head", "stomach", "back"],
   type: "single",
 };
 
