@@ -14,23 +14,23 @@ const prompt: Prompt = {
       options: ["run", "bike", "swim"],
       type: "multiple",
       dependsValue: "yes",
-      // followUpPrompts: [
-      //   {
-      //     id: "890",
-      //     question: "What stroke?",
-      //     options: ["breast", "freestyle"],
-      //     type: "multiple",
-      //     dependsValue: "swim",
-      //   },
-      // ],
+      followUpPrompts: [
+        {
+          id: "890",
+          question: "What stroke?",
+          options: ["breast", "freestyle"],
+          type: "multiple",
+          dependsValue: "swim",
+        },
+      ],
     },
-    // {
-    //   id: "789",
-    //   question: "Why not?",
-    //   options: ["tired", "busy"],
-    //   type: "multiple",
-    //   dependsValue: "no",
-    // },
+    {
+      id: "789",
+      question: "Why not?",
+      options: ["tired", "busy"],
+      type: "multiple",
+      dependsValue: "no",
+    },
   ],
 };
 
