@@ -6,44 +6,57 @@ import { useEffect, useState } from "react";
 import { useSurveyContext } from "./SurveyContext";
 import { Button } from "react-native-paper";
 import { mockPrompts } from "./mockPrompts";
+import { mockSurvey } from "./mockSurvey";
+import { SurveyStart } from "./SurveyStart";
+import { SurveyEnd } from "./SurveyEnd";
+import { Prompt } from "../../entities/Prompt";
 
 export function Survey() {
   const [promptIndex, setPromptIndex] = useState(0);
-  const { prompts, setPrompts } = useSurveyContext();
+  const { survey, setSurvey, prompts, setPrompts } = useSurveyContext();
 
   useEffect(() => {
     setPrompts(mockPrompts);
+    setSurvey(mockSurvey);
   }, []);
 
   if (!prompts || !prompts.length) return null;
+  if (!survey) return null;
+
+  const pages = [
+    { type: "surveyStart", survey: survey },
+    ...prompts,
+    { type: "surveyEnd" },
+  ];
 
   const handleNavigateBackward = () => {
-    if (promptIndex === 0) {
-      return;
-    } else {
-      setPromptIndex((prevIndex) => {
-        return (prevIndex -= 1);
-      });
-    }
+    setPromptIndex((prevIndex) => {
+      return prevIndex === 0 ? 0 : (prevIndex -= 1);
+    });
   };
 
   const handleNavigateForward = () => {
-    if (promptIndex === prompts.length - 1) {
-      return;
-    } else {
-      setPromptIndex((prevIndex) => {
-        return (prevIndex += 1);
-      });
-    }
+    setPromptIndex((prevIndex) => {
+      return prevIndex >= pages.length - 1
+        ? pages.length - 1
+        : (prevIndex += 1);
+    });
   };
 
-  console.log(prompts);
-
-  const prompt = prompts[promptIndex];
+  const displayPage = () => {
+    if (pages[promptIndex]["type"] === "surveyStart") {
+      return <SurveyStart survey={survey} />;
+    } else if (pages[promptIndex]["type"] === "surveyEnd") {
+      console.log("here");
+      return <SurveyEnd />;
+    } else {
+      return <DisplayPrompts prompt={pages[promptIndex] as Prompt} />;
+    }
+  };
   return (
     <>
       {/* Prompt */}
-      <DisplayPrompts prompt={prompt} />
+      <View style={styles.content}>{displayPage()}</View>
       {/* Previous and Next Buttons*/}
       <View style={styles.navigationContainer}>
         {promptIndex > 0 ? (
@@ -78,6 +91,12 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     height: 100,
+  },
+  content: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: "100%",
   },
   navigationButton: {},
 });

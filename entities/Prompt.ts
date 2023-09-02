@@ -3,7 +3,7 @@ export type Prompt = {
   question: string;
   options: Option[];
   type: PromptType;
-  dependsValue?: string;
+  visibleIf?: string;
   followUpPrompts?: Prompt[];
 };
 

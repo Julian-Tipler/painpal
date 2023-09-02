@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 import { Prompt } from "../../../entities/Prompt";
 
 export const SinglePrompt = ({ prompt }: { prompt: Prompt }) => {
-  const { setAnswers } = useSurveyContext();
+  const { answers, setAnswers } = useSurveyContext();
 
   const options = prompt.type === "yesNo" ? ["yes", "no"] : prompt.options;
   const multiSelect = prompt.type === "multiple";
@@ -38,7 +38,14 @@ export const SinglePrompt = ({ prompt }: { prompt: Prompt }) => {
       <Text>{prompt.question}</Text>
       {options.map((option, i) => {
         return (
-          <Button key={`button-${i}`} onPress={handleOptionSelect({ option })}>
+          <Button
+            key={`button-${i}`}
+            onPress={handleOptionSelect({ option })}
+            style={[
+              styles.singleSelectionButton,
+              answers[prompt.id]?.includes(option) ? styles.selected : null,
+            ]}
+          >
             {option}
           </Button>
         );
@@ -53,7 +60,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   singleSelectionButton: {
-    backgroundColor: "purple",
+    backgroundColor: "blue",
     marginBottom: 20,
+  },
+  selected: {
+    backgroundColor: "orange",
   },
 });
