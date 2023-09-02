@@ -4,8 +4,9 @@ import { Prompt } from "../../entities/Prompt";
 import { useSurveyContext } from "./SurveyContext";
 import { SinglePrompt } from "./SinglePrompt/SinglePrompt";
 import { useEffect } from "react";
+import { PainScale } from "./SinglePrompt/PainScale";
 
-export function DisplayPrompts({ prompt }: { prompt: Prompt }) {
+export function PromptShell({ prompt }: { prompt: Prompt }) {
   const { answers } = useSurveyContext();
   const promptsDisplayed: Prompt[] = [];
 
@@ -41,7 +42,18 @@ export function DisplayPrompts({ prompt }: { prompt: Prompt }) {
   return (
     <>
       {promptsDisplayed.map((promptDisplayed, i) => {
-        return <SinglePrompt prompt={promptDisplayed} key={`option-${i}`} />;
+        switch (promptDisplayed.type) {
+          case "yesNo":
+          case "multiple":
+          case "single":
+            return (
+              <SinglePrompt prompt={promptDisplayed} key={`option-${i}`} />
+            );
+          case "painScale":
+            return <PainScale prompt={promptDisplayed} key={`option-${i}`} />;
+          default:
+            return <Text>Error</Text>;
+        }
       })}
     </>
   );

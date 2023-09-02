@@ -7,6 +7,6 @@ export type Prompt = {
   followUpPrompts?: Prompt[];
 };
 
-export type PromptType = "single" | "multiple" | "yesNo";
+export type PromptType = "scale" | "painScale" | "single" | "multiple" | "yesNo";
 
 export type Option = "yes" | "no" | string;
