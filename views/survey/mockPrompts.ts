@@ -2,6 +2,9 @@
 
 import { Prompt } from "../../entities/Prompt";
 
+// Will have to handle the object structure recursively in the resolver
+// It may make more sense for visibleIf to actually include the id of the parent Prompt 
+
 const prompt: Prompt = {
   id: "123",
   question: "Did you exercise today",
@@ -13,14 +16,14 @@ const prompt: Prompt = {
       question: "What exercise did you do?",
       options: ["run", "bike", "swim"],
       type: "multiple",
-      dependsValue: "yes",
+      visibleIf: "yes",
       followUpPrompts: [
         {
           id: "890",
           question: "What stroke?",
           options: ["breast", "freestyle"],
           type: "multiple",
-          dependsValue: "swim",
+          visibleIf: "swim",
         },
       ],
     },
@@ -29,7 +32,7 @@ const prompt: Prompt = {
       question: "Why not?",
       options: ["tired", "busy"],
       type: "multiple",
-      dependsValue: "no",
+      visibleIf: "no",
     },
   ],
 };

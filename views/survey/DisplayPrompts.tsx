@@ -1,12 +1,15 @@
 import { StyleSheet } from "react-native";
-import { View } from "../../components/Themed";
+import { Text, View } from "../../components/Themed";
 import { Prompt } from "../../entities/Prompt";
 import { useSurveyContext } from "./SurveyContext";
 import { SinglePrompt } from "./SinglePrompt/SinglePrompt";
+import { useEffect } from "react";
 
 export function DisplayPrompts({ prompt }: { prompt: Prompt }) {
-  const { answers, setAnswers } = useSurveyContext();
+  const { answers } = useSurveyContext();
   const promptsDisplayed: Prompt[] = [];
+
+  useEffect(() => {}, []);
 
   const recursivelyDisplayPrompts = (prompt: Prompt, parentId?: string) => {
     // First push the current prompt
@@ -18,15 +21,22 @@ export function DisplayPrompts({ prompt }: { prompt: Prompt }) {
     if (!promptAnswer || !promptAnswer.length) return;
 
     prompt.followUpPrompts.forEach((followUpPrompt: Prompt) => {
-      if (!followUpPrompt.dependsValue) return;
-      if (promptAnswer.includes(followUpPrompt.dependsValue)) {
+      if (!followUpPrompt.visibleIf) return;
+      if (promptAnswer.includes(followUpPrompt.visibleIf)) {
         recursivelyDisplayPrompts(followUpPrompt, prompt.id);
       }
     });
   };
 
   recursivelyDisplayPrompts(prompt);
-  if (promptsDisplayed.length < 1) return <View>No prompts</View>;
+
+  if (promptsDisplayed.length < 1) {
+    return (
+      <View>
+        <Text> No prompts</Text>
+      </View>
+    );
+  }
 
   return (
     <>
