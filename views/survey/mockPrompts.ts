@@ -3,9 +3,16 @@
 import { Prompt } from "../../entities/Prompt";
 
 // Will have to handle the object structure recursively in the resolver
-// It may make more sense for visibleIf to actually include the id of the parent Prompt 
+// It may make more sense for visibleIf to actually include the id of the parent Prompt
 
-const prompt: Prompt = {
+const promptOne: Prompt = {
+  id: "001",
+  question: "What score would you give your pain",
+  options: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+  type: "painScale",
+};
+
+const promptTwo: Prompt = {
   id: "123",
   question: "Did you exercise today",
   options: ["yes", "no"],
@@ -40,11 +47,11 @@ const prompt: Prompt = {
 // I could get more explicit with the "depends" condition, perhaps having it include
 // multiple Prompt ids and required answer for each one. Not for MVP though
 
-const promptTwo: Prompt = {
+const promptThree: Prompt = {
   id: "234",
   question: "Where is your pain",
   options: ["head", "stomach", "back"],
   type: "single",
 };
 
-export const mockPrompts = [prompt, promptTwo];
+export const mockPrompts = [promptOne, promptTwo, promptThree];

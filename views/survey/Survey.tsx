@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 import { View } from "../../components/Themed";
-import { DisplayPrompts } from "./DisplayPrompts";
+import { PromptShell } from "./PromptShell";
 import { useEffect, useState } from "react";
 import { useSurveyContext } from "./SurveyContext";
 import { Button } from "react-native-paper";
@@ -47,10 +47,9 @@ export function Survey() {
     if (pages[promptIndex]["type"] === "surveyStart") {
       return <SurveyStart survey={survey} />;
     } else if (pages[promptIndex]["type"] === "surveyEnd") {
-      console.log("here");
       return <SurveyEnd />;
     } else {
-      return <DisplayPrompts prompt={pages[promptIndex] as Prompt} />;
+      return <PromptShell prompt={pages[promptIndex] as Prompt} />;
     }
   };
   return (
@@ -70,13 +69,17 @@ export function Survey() {
         ) : (
           <View></View>
         )}
-        <Button
-          mode="contained"
-          style={styles.navigationButton}
-          onPress={handleNavigateForward}
-        >
-          Next
-        </Button>
+        {promptIndex < prompts.length ? (
+          <Button
+            mode="contained"
+            style={styles.navigationButton}
+            onPress={handleNavigateForward}
+          >
+            Next
+          </Button>
+        ) : (
+          <View></View>
+        )}
       </View>
     </>
   );
@@ -97,6 +100,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     width: "100%",
+    padding: 24,
   },
   navigationButton: {},
 });

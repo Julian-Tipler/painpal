@@ -10,7 +10,7 @@ export const SinglePrompt = ({ prompt }: { prompt: Prompt }) => {
   const options = prompt.type === "yesNo" ? ["yes", "no"] : prompt.options;
   const multiSelect = prompt.type === "multiple";
 
-  const handleOptionSelect =
+  const createOptionSelect =
     ({ option }: { option: string }) =>
     () => {
       setAnswers((prevAnswers) => {
@@ -40,7 +40,7 @@ export const SinglePrompt = ({ prompt }: { prompt: Prompt }) => {
         return (
           <Button
             key={`button-${i}`}
-            onPress={handleOptionSelect({ option })}
+            onPress={createOptionSelect({ option })}
             style={[
               styles.singleSelectionButton,
               answers[prompt.id]?.includes(option) ? styles.selected : null,
