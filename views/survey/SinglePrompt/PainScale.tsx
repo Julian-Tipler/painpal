@@ -5,7 +5,6 @@ import { useSurveyContext } from "../SurveyContext";
 import { Text, View } from "../../../components/Themed";
 import { Button } from "react-native-paper";
 import { Sizes, Spacer } from "../../../components/Spacer";
-// import LinearGradient from "react-native-linear-gradient";
 
 const gradientColors = ["#FF5733", "#FFA500", "#FFFF00", "#90EE90", "#008000"];
 
@@ -40,31 +39,17 @@ export function PainScale({ prompt }: { prompt: Prompt }) {
           );
 
           return (
-            // <LinearGradient
-            //   key={`button-${i}`}
-            //   colors={[
-            //     gradientColors[colorIndex],
-            //     gradientColors[colorIndex + 1],
-            //   ]}
-            //   start={{ x: 0, y: 0 }}
-            //   end={{ x: 1, y: 0 }}
-            //   style={[
-            //     styles.numberButton,
-            //     answers[prompt.id]?.includes(option) ? styles.selected : null,
-            //   ]}
-            // >
-              <Button
-                key={`button-${i}`}
-                onPress={createOptionSelect({ option })}
-                style={[
-                  styles.numberButton,
-                  answers[prompt.id]?.includes(option) ? styles.selected : null,
-                ]}
-                mode="contained"
-              >
-                {option}
-              </Button>
-            // </LinearGradient>
+            <Button
+              key={`button-${i}`}
+              onPress={createOptionSelect({ option })}
+              style={[
+                styles.numberButton,
+                answers[prompt.id]?.includes(option) ? styles.selected : null,
+              ]}
+              mode="contained"
+            >
+              {option}
+            </Button>
           );
         })}
       </View>
