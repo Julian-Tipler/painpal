@@ -1,27 +1,3 @@
-// {
-//     "compilerOptions": {
-//         "module": "NodeNext",
-//         "moduleResolution": "NodeNext",
-//         "target": "es2020",
-//         "sourceMap": true,
-//         "outDir": "dist",
-//         "types": [
-//             "node"
-//         ],
-//         // Without including types you have to do skipLibCheck
-//         // "skipLibCheck": true,
-//         // "rootDirs": [
-//         //     "src"
-//         // ],
-//         // "lib": [
-//         //     "es2020"
-//         // ],
-//         // "esModuleInterop": true,
-//     },
-//     "include": [
-//         "src"
-//     ],
-// }
 {
     "compilerOptions": {
         "rootDirs": [
