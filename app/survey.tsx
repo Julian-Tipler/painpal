@@ -5,7 +5,7 @@ import { SurveyProvider } from "../views/survey/SurveyContext";
 export default function SurveyScreen() {
   return (
     <SurveyProvider>
-      <Survey />;
+      <Survey />
     </SurveyProvider>
   );
 }

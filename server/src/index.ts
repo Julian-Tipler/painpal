@@ -1,5 +1,34 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
+import { books } from "./resolvers/books.js";
+import { MongoClient, ServerApiVersion } from 'mongodb';
+
+const uri = "mongodb+srv://tiplerjulian:9Hk24eXK5vhCfero@cluster0.a6irpmz.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
+
+// mongodb+srv://tiplerjulian:<password>@cluster0.a6irpmz.mongodb.net/?retryWrites=true&w=majority
+
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -21,27 +50,16 @@ const typeDefs = `#graphql
   }
 `;
 
-const books = [
-    {
-        title: 'The Awakening',
-        author: 'Kate Chopin',
-    },
-    {
-        title: 'City of Glass',
-        author: 'Paul Auster',
-    },
-];
-
 const resolvers = {
-    Query: {
-        //This would be replaced with actual database calls
-        books: () => books,
-    }
+  Query: {
+    //This would be replaced with actual database calls
+    books: books,
+  }
 }
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+  typeDefs,
+  resolvers,
 })
 
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
@@ -50,7 +68,7 @@ const server = new ApolloServer({
 //  3. prepares your app to handle incoming requests
 
 const { url } = await startStandaloneServer(server, {
-    listen: { port: 4000 },
+  listen: { port: 4000 },
 });
 
 console.log(`🚀  Server ready at: ${url}`);
