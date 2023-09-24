@@ -1,5 +1,10 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
+import { dumb } from './dumb.js';
+// import { dummyBooks } from './resolvers/books';
+
+// mongodb+srv://tiplerjulian:<password>@cluster0.a6irpmz.mongodb.net/?retryWrites=true&w=majority
+
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -21,21 +26,10 @@ const typeDefs = `#graphql
   }
 `;
 
-const books = [
-    {
-        title: 'The Awakening',
-        author: 'Kate Chopin',
-    },
-    {
-        title: 'City of Glass',
-        author: 'Paul Auster',
-    },
-];
-
 const resolvers = {
     Query: {
         //This would be replaced with actual database calls
-        books: () => books,
+        books: () => dumb,
     }
 }
 
