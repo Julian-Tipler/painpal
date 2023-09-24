@@ -10,10 +10,16 @@ Plan:
 * Set up basic structure but don't style elements yet. Just set up basic positioning
 
 - Decide what server hosting platform, helper libraries, and database to use.
-  - Apollo is one of them.
+  - Apollo server
+    - using startStandaloneServer which uses express
+  - Atlas MongoDB
+    - With a library?
 - Figure out how hosting is going to work. Where do I host the frontend and backend of my app?
+  - frontend: Static hosting site? firebase??
+  - server: AWS??
+  - DB: Atlas
 - Hello world database with /graphql endpoint
 - Hello world database with frontend app (Website skeleton is near complete!)
 - Set up Apollo client frontend (works with React native!)
-- Hello world 
+- Hello world
 - Set up basic structure but don't style elements yet. Just set up basic positioning.
