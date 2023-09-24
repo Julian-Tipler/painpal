@@ -1,5 +1,8 @@
 
 export const books = () => {
+    const dbName = "myDatabase";
+    const collectionName = "recipes";
+    
     return dummyBooks
 }
 
