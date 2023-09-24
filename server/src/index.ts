@@ -1,6 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import { dumb } from './dumb.js';
+import { books } from "./resolvers/books.js";
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
 const uri = "mongodb+srv://tiplerjulian:9Hk24eXK5vhCfero@cluster0.a6irpmz.mongodb.net/?retryWrites=true&w=majority";
@@ -53,7 +53,7 @@ const typeDefs = `#graphql
 const resolvers = {
   Query: {
     //This would be replaced with actual database calls
-    books: () => dumb,
+    books: books,
   }
 }
 

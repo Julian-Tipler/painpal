@@ -44,10 +44,13 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+// const httpLink = createHttpLink({
+//   uri: 'http://localhost:4000/graphql', // Replace with your GraphQL server's absolute URL
+// });
+
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql', // Replace with your GraphQL server's URL
   cache: new InMemoryCache(),
-  link: new HttpLink({ uri: '/graphql', fetch })
+  link: new HttpLink({ uri: 'http://localhost:4000/graphql', fetch })
 });
 
 function RootLayoutNav() {
@@ -55,12 +58,12 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      {/* <ApolloProvider client={client}> */}
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="survey" options={{ presentation: 'modal' }} />
-      </Stack>
-      {/* </ApolloProvider> */}
+      <ApolloProvider client={client}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="survey" options={{ presentation: 'modal' }} />
+        </Stack>
+      </ApolloProvider>
     </ThemeProvider>
   );
 }
