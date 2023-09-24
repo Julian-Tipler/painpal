@@ -44,10 +44,6 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
-// const httpLink = createHttpLink({
-//   uri: 'http://localhost:4000/graphql', // Replace with your GraphQL server's absolute URL
-// });
-
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({ uri: 'http://localhost:4000/graphql', fetch })
