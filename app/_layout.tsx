@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -42,15 +43,22 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql', // Replace with your GraphQL server's URL
+  cache: new InMemoryCache(),
+});
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="survey" options={{ presentation: 'modal' }} />
-      </Stack>
+      {/* <ApolloProvider client={client}> */}
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="survey" options={{ presentation: 'modal' }} />
+        </Stack>
+      {/* </ApolloProvider> */}
     </ThemeProvider>
   );
 }
