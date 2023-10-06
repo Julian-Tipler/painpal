@@ -51,7 +51,6 @@ const server = new ApolloServer({
   resolvers,
 });
 
-mongoose.connect(uri);
 
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
 //  1. creates an Express app
