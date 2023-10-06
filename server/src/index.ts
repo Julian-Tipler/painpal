@@ -1,6 +1,5 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { books } from "./graphql/resolvers/books.js";
 import { sales } from "./graphql/resolvers/sales.js";
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { checkMongo } from "./database/checkMongo.js";
@@ -27,7 +26,6 @@ if (!uri) {
 const resolvers = {
   Query: {
     //This would be replaced with actual database calls
-    books: books,
     sales: sales,
   },
 };
