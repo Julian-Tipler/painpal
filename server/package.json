@@ -5,10 +5,9 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "oldCompile": "tsc",
-    "oldStart": "npm run compile && node ./dist/index.js",
-    "dev": "nodemon",
-    "start": "ts-node --esm src/index.ts"
+    "compile": "tsc",
+    "start": "npm run compile && node ./dist/index.js",
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "",
