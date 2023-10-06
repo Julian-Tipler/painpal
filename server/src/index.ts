@@ -1,8 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { sales } from "./graphql/resolvers/sales.js";
-import { MongoClient, ServerApiVersion } from "mongodb";
-import { checkMongo } from "./database/checkMongo.js";
 import { typeDefs } from "./graphql/typeDefs.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
