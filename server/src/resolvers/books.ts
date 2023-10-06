@@ -9,7 +9,7 @@ export const books = () => {
 export const dummyBooks = [
     {
         title: 'The Awakening',
-        author: 'Kate Chopin',
+        author: 'Kate Chopinn',
     },
     {
         title: 'City of Glass',
