@@ -41,9 +41,12 @@ const server = new ApolloServer({
 //  1. creates an Express app
 //  2. installs your ApolloServer instance as middleware
 //  3. prepares your app to handle incoming requests
+
+const port = parseInt(process.env.PORT || "4000");
+
 const { url } = await startStandaloneServer(server, {
   context: async ({ req }) => ({ token: req.headers.token }),
-  listen: { port: 4000 },
+  listen: { port },
 });
 
 console.log(`🚀  Server ready at: ${url}`);
