@@ -27,8 +27,6 @@ async function run() {
 }
 run().catch(console.dir);
 
-// mongodb+srv://tiplerjulian:<password>@cluster0.a6irpmz.mongodb.net/?retryWrites=true&w=majority
-
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
