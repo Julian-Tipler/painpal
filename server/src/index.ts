@@ -15,25 +15,6 @@ if (!uri) {
   throw new Error("MongoDB URI not found in environment variables.");
 }
 
-//GRAPHQL SERVER
-
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
-
-const resolvers = {
-  Query: {
-    //This would be replaced with actual database calls
-    sales: sales,
-  },
-};
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
-
-//Starts mongodb comnection
 mongoose
   .connect(uri)
   .then(() => {
@@ -42,6 +23,19 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+//GRAPHQL SERVER
+
+const resolvers = {
+  Query: {
+    sales: sales,
+  },
+};
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
 
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
 //  1. creates an Express app
