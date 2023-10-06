@@ -17,20 +17,6 @@ const uri: string | undefined = process.env.MONGODB_URI;
 if (!uri) {
   throw new Error("MongoDB URI not found in environment variables.");
 }
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
-
-// Checks if database is connected
-checkMongo(client).catch(console.dir);
-
-export const getClient = () => {
-  return client;
-};
 
 //GRAPHQL SERVER
 
@@ -51,12 +37,20 @@ const server = new ApolloServer({
   resolvers,
 });
 
+//Starts mongodb comnection
+mongoose
+  .connect(uri)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
 //  1. creates an Express app
 //  2. installs your ApolloServer instance as middleware
 //  3. prepares your app to handle incoming requests
-
 const { url } = await startStandaloneServer(server, {
   context: async ({ req }) => ({ token: req.headers.token }),
   listen: { port: 4000 },

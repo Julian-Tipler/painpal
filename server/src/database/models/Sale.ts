@@ -1,6 +1,6 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
-export const saleSchema = new Schema({
+const saleSchema = new Schema({
   item: {
     type: String,
     required: true,
@@ -14,3 +14,5 @@ export const saleSchema = new Schema({
     required: true,
   },
 });
+
+export const Sale = model("Sale", saleSchema);
