@@ -1,8 +1,7 @@
 export const typeDefs = `#graphql
-  type Book {
+  type Survey {
     _id: String
     title: String
-    author: String
   }
 
   type Sale {
@@ -13,7 +12,7 @@ export const typeDefs = `#graphql
   }
 
   type Query {
-    books: [Book]
+    getSurvey: [Survey]
     sales: [Sale]
   }
 `;

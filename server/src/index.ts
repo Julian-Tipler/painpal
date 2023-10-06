@@ -4,6 +4,7 @@ import { sales } from "./graphql/resolvers/sales.js";
 import { typeDefs } from "./graphql/typeDefs.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { getSurvey } from "./graphql/resolvers/surveys/getSurvey.js";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ mongoose
 const resolvers = {
   Query: {
     sales: sales,
+    getSurvey: getSurvey,
   },
 };
 

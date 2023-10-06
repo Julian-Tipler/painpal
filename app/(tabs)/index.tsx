@@ -4,11 +4,10 @@ import EditScreenInfo from "../../components/EditScreenInfo";
 import { Text, View } from "../../components/Themed";
 import { useEffect } from "react";
 import { gql } from "@apollo/client";
-import { useQuery } from '@apollo/client';
-
+import { useQuery } from "@apollo/client";
 
 const GET_SURVEYS = gql`
-  query GetSurveys {
+  query getSurvey {
     books {
       title
     }
@@ -17,7 +16,7 @@ const GET_SURVEYS = gql`
 
 export default function HomeScreen() {
   const { loading, error, data } = useQuery(GET_SURVEYS);
-  console.log(data)
+  console.log(data);
 
   return (
     <View style={styles.container}>
