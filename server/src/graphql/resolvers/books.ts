@@ -1,4 +1,4 @@
-import { getClient } from "../index.js";
+import { getClient } from "../../index.js";
 
 export const books = async () => {
   const client = getClient();

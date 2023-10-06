@@ -1,6 +1,8 @@
-import { getClient } from "../index.js";
+import { getClient } from "../../index.js";
 
-export const sales = async () => {
+export const sales = async (_, args, context) => {
+  console.log(args);
+  console.log(context);
   const client = getClient();
   await client.connect();
   const database = client.db("develop");

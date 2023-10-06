@@ -1,11 +1,22 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { books } from "./resolvers/books.js";
-import { sales } from "./resolvers/sales.js";
+import { books } from "./graphql/resolvers/books.js";
+import { sales } from "./graphql/resolvers/sales.js";
 import { MongoClient, ServerApiVersion } from "mongodb";
+import { checkMongo } from "./database/checkMongo.js";
+import { typeDefs } from "./graphql/typeDefs.js";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-const uri =
-  "mongodb+srv://tiplerjulian:9Hk24eXK5vhCfero@cluster0.a6irpmz.mongodb.net/?retryWrites=true&w=majority";
+dotenv.config();
+
+// DATABASE CONNECTION
+
+const uri: string | undefined = process.env.MONGODB_URI;
+
+if (!uri) {
+  throw new Error("MongoDB URI not found in environment variables.");
+}
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -14,21 +25,8 @@ const client = new MongoClient(uri, {
   },
 });
 
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
+// Checks if database is connected
+checkMongo(client).catch(console.dir);
 
 export const getClient = () => {
   return client;
@@ -39,25 +37,6 @@ export const getClient = () => {
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
 // your data.
-const typeDefs = `#graphql
-  type Book {
-    _id: String
-    title: String
-    author: String
-  }
-
-  type Sale {
-    _id: String
-    item: String
-    price: Int
-    quantity: Int
-  }
-
-  type Query {
-    books: [Book]
-    sales: [Sale]
-  }
-`;
 
 const resolvers = {
   Query: {
@@ -71,6 +50,8 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
+
+mongoose.connect(uri);
 
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
 //  1. creates an Express app
