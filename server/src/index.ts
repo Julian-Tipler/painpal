@@ -1,9 +1,10 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { typeDefs } from "./graphql/typeDefs.js";
+// import { typeDefs } from "./graphql/typeDefs.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import {resolvers} from "./graphql/resolvers/index.js";
+import { resolvers } from "./graphql/resolvers/index.js";
+import { typeDefs } from "./graphql/typeDefs.js";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ mongoose
   });
 
 //GRAPHQL SERVER
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
