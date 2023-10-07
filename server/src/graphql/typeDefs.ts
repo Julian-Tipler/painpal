@@ -1,19 +1,16 @@
 export const typeDefs = `#graphql
-  type Book {
+  type Survey {
     _id: String
     title: String
-    author: String
-  }
-
-  type Sale {
-    _id: String
-    item: String
-    price: Int
-    quantity: Int
   }
 
   type Query {
-    books: [Book]
-    sales: [Sale]
+    getSurvey(id:String): Survey
+  }
+
+  type Mutation {
+    createSurvey(title: String): Survey
+    updateSurvey(id: String, title: String): Survey
+    deleteSurvey(id: String): String
   }
 `;
