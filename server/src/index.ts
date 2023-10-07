@@ -1,10 +1,12 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { sales } from "./graphql/resolvers/sales.js";
 import { typeDefs } from "./graphql/typeDefs.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { getSurvey } from "./graphql/resolvers/surveys/getSurvey.js";
+import { createSurvey } from "./graphql/resolvers/surveys/createSurvey.js";
+import { updateSurvey } from "./graphql/resolvers/surveys/updateSurvey.js";
+import { deleteSurvey } from "./graphql/resolvers/surveys/deleteSurvey.js";
 
 dotenv.config();
 
@@ -29,8 +31,12 @@ mongoose
 
 const resolvers = {
   Query: {
-    sales: sales,
-    getSurvey: getSurvey,
+    getSurvey,
+  },
+  Mutation: {
+    createSurvey,
+    updateSurvey,
+    deleteSurvey,
   },
 };
 

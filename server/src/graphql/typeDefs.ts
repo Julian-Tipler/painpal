@@ -4,15 +4,13 @@ export const typeDefs = `#graphql
     title: String
   }
 
-  type Sale {
-    _id: String
-    item: String
-    price: Int
-    quantity: Int
+  type Query {
+    getSurvey(id:String): Survey
   }
 
-  type Query {
-    getSurvey: [Survey]
-    sales: [Sale]
+  type Mutation {
+    createSurvey(title: String): Survey
+    updateSurvey(id: String, title: String): Survey
+    deleteSurvey(id: String): String
   }
 `;
