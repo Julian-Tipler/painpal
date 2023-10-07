@@ -5,6 +5,11 @@ const surveySchema = new Schema({
     type: String,
     required: true,
   },
+  questions: {
+    type: [Schema.Types.ObjectId],
+    ref: "Question",
+    default: [],
+  },
 });
 
 export const Survey = model("Survey", surveySchema);
