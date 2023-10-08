@@ -1,21 +1,12 @@
 import { StyleSheet } from "react-native";
 
-import EditScreenInfo from "../../components/EditScreenInfo";
 import { Text, View } from "../../components/Themed";
-import { useEffect } from "react";
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client";
-
-const GET_SURVEYS = gql`
-  query getSurvey {
-    books {
-      title
-    }
-  }
-`;
+import { GET_SURVEY } from "../../graphql/getSurvey";
 
 export default function HomeScreen() {
-  const { loading, error, data } = useQuery(GET_SURVEYS);
+  const { loading, error, data } = useQuery(GET_SURVEY);
   console.log(data);
 
   return (

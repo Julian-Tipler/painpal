@@ -13,9 +13,10 @@ import {
   InMemoryCache,
   ApolloProvider,
   HttpLink,
-  gql,
+  useQuery,
 } from "@apollo/client";
 import fetch from "cross-fetch";
+import { GET_SURVEY } from "../graphql/getSurvey";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -61,18 +62,7 @@ const client = new ApolloClient({
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-  client
-    .query({
-      query: gql`
-        query GetSurvey {
-          getSurvey(id: "652051820189e67b82068351") {
-            _id,
-            title
-          }
-        }
-      `,
-    })
-    .then((result) => console.log(result));
+  
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <ApolloProvider client={client}>
