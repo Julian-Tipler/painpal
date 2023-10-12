@@ -1,17 +1,4 @@
 export const typeDefs = `#graphql
-  type Survey {
-    _id: String!
-    title: String!
-    questions: [Question]
-  }
-
-  type Question {
-    _id: String!
-    text: String
-    type: QuestionType
-    options: [String]
-  }
-
   enum QuestionType {
     YES_NO
     MULTIPLE_CHOICE
@@ -19,19 +6,40 @@ export const typeDefs = `#graphql
   }
 
   # INPUTS
-  input QuestionInput {
-    text: String!
-    type: QuestionType!
-    options: [String!]!
+  # Read
+  input GetSurveyInput {
+    id: String!
   }
 
-  input CreateSurveyMutation {
+  # Create
+  input CreateSurveyInput {
     title: String!
     questions: [QuestionInput]
   }
+  input QuestionInput {
+    text: String!
+    type: QuestionType!
+    options: [String!]
+  }
 
-  input GetSurveyInput {
+  # Update
+  input UpdateSurveyInput {
     id: String!
+    title: String
+    questions: [QuestionInput]
+  }
+
+  # PAYLOADS
+  type Survey {
+    id: ID!
+    title: String!
+    questions: [Question]
+  }
+  type Question {
+    id: ID!
+    text: String!
+    type: QuestionType!
+    options: [String!]
   }
 
   # QUERIES AND MUTATIONS
@@ -39,8 +47,8 @@ export const typeDefs = `#graphql
     getSurvey(input:GetSurveyInput): Survey
   }
   type Mutation {
-    createSurvey(input: CreateSurveyMutation): Survey
-    updateSurvey(id: String, title: String): Survey
+    createSurvey(input: CreateSurveyInput!): Survey
+    updateSurvey(input: UpdateSurveyInput): Survey
     deleteSurvey(id: String): String
   }
 `;
