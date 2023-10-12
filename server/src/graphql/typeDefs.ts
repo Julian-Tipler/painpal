@@ -10,24 +10,25 @@ export const typeDefs = `#graphql
   # Inputs
   input CreateUserInput {
     username: String!
-    password: String!
+    passwordHash: String!
   }
   input LoginInput {
     username: String!
-    password: String!
+    passwordHash: String!
   }
   input UpdateUserInput {
+    id: ID!
     username: String
-    password: String
+    passwordHash: String
   }
   input DeleteUserInput {
-    username: String!
+    id: ID!
   }
   # Payloads
   type User {
     id: ID!
     username: String!
-    password: String!
+    passwordHash: String!
   }
 
 
