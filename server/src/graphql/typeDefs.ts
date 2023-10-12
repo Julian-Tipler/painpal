@@ -38,18 +38,25 @@ export const typeDefs = `#graphql
     id: ID!
   }
   input CreateSurveyInput {
+    userId: ID!
     title: String!
     questions: [QuestionInput]
   }
   input QuestionInput {
     text: ID!
     type: QuestionType!
-    options: [String!]
+    options: [String!]!
   }
   input UpdateSurveyInput {
     id: ID!
     title: String
-    questions: [QuestionInput]
+    questions: [UpdateQuestionInput!]
+  }
+  input UpdateQuestionInput {
+    id: ID
+    text: String
+    type: QuestionType
+    options: [String!]
   }
   input DeleteSurveyInput {
     id: ID!

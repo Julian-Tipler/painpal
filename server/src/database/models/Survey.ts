@@ -10,8 +10,12 @@ const surveySchema = new Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User", // Reference to the User model
+    required: true,
   },
-  title: String,
+  title: {
+    type: String,
+    required: true,
+  },
   questions: [questionSchema],
 });
 
