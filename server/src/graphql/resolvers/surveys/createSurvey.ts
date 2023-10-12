@@ -3,8 +3,9 @@ import { Survey } from "../../../database/models/Survey.js";
 
 export const createSurvey = async (_, { input }, context) => {
   const { title, questions } = input;
-  console.log(title);
+
   const survey = await Survey.create({ title, questions });
   if (!survey) throw new GraphQLError("Survey not created");
+
   return survey;
 };

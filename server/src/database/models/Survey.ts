@@ -1,7 +1,6 @@
 import {Schema, model} from "mongoose";
 
 const questionSchema = new Schema({
-  _id: String,
   text: String,
   type: String, 
   options: [String],
