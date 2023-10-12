@@ -4,16 +4,33 @@ import jwt from "jsonwebtoken";
 
 export const getUser = async (token) => {
   try {
-    const { userId } = jwt.verify(token, "your-secret-key"); // Use your secret key here
+    const {userId} = verifyToken(token);
+    const user = await findUserById(userId);
+    return user;
+  } catch (error) {
+    throw new GraphQLError(error.message);
+  }
+};
 
+const verifyToken = (token) => {
+  try {
+    const userId = jwt.verify(token, process.env.SECRET_KEY);
+    return userId;
+  } catch (error) {
+    throw new Error("Invalid token");
+  }
+};
+
+const findUserById = async (userId) => {
+  try {
     const user = await User.findById(userId);
+
     if (!user) {
-      throw new GraphQLError("User not found");
+      throw new Error("User ID not recognized");
     }
 
     return user;
   } catch (error) {
-    // Handle token verification errors
-    throw new GraphQLError("Invalid token");
+    throw new Error("Error finding user");
   }
 };

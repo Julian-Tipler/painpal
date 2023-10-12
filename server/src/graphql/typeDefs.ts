@@ -11,6 +11,7 @@ export const typeDefs = `#graphql
   input CreateUserInput {
     username: String!
     passwordHash: String!
+    roles: [String!]!
   }
   input LoginInput {
     username: String!
@@ -29,6 +30,7 @@ export const typeDefs = `#graphql
     id: ID!
     username: String!
     passwordHash: String!
+    roles: [String]!
   }
 
 
@@ -38,7 +40,6 @@ export const typeDefs = `#graphql
     id: ID!
   }
   input CreateSurveyInput {
-    userId: ID!
     title: String!
     questions: [QuestionInput]
   }
@@ -64,6 +65,7 @@ export const typeDefs = `#graphql
   # Payloads
   type Survey {
     id: ID!
+    userId: ID!
     title: String!
     questions: [Question]
   }

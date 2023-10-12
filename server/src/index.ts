@@ -34,19 +34,19 @@ const port = parseInt(process.env.PORT || "4000");
 
 const { url } = await startStandaloneServer(server, {
   context: async ({ req }) => {
-    // const token = req.headers.authorization || "";
+    const token = req.headers.authorization || "";
 
-    // const user = await getUser(token);
+    const user = await getUser(token);
 
-    // if (!user)
-    //   throw new GraphQLError("User is not authenticated", {
-    //     extensions: {
-    //       code: "UNAUTHENTICATED",
-    //       http: { status: 401 },
-    //     },
-    //   });
+    if (!user)
+      throw new GraphQLError("User is not authenticated", {
+        extensions: {
+          code: "UNAUTHENTICATED",
+          http: { status: 401 },
+        },
+      });
 
-    // return { user };
+    return { user };
   },
   listen: { port },
 });
