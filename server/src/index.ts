@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { resolvers } from "./graphql/resolvers/index.js";
 import { typeDefs } from "./graphql/typeDefs.js";
+import { getUser } from "./database/dataServices/getUser.js";
+import { GraphQLError } from "graphql";
 
 dotenv.config();
 
@@ -23,20 +25,29 @@ mongoose
   });
 
 //GRAPHQL SERVER
-
 const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
 
-// Passing an ApolloServer instance to the `startStandaloneServer` function:
-//  1. creates an Express app
-//  2. installs your ApolloServer instance as middleware
-//  3. prepares your app to handle incoming requests
 const port = parseInt(process.env.PORT || "4000");
 
 const { url } = await startStandaloneServer(server, {
-  context: async ({ req }) => ({ token: req.headers.token }),
+  context: async ({ req }) => {
+    const token = req.headers.authorization || "";
+
+    const user = await getUser(token);
+
+    if (!user)
+      throw new GraphQLError("User is not authenticated", {
+        extensions: {
+          code: "UNAUTHENTICATED",
+          http: { status: 401 },
+        },
+      });
+
+    return { user };
+  },
   listen: { port },
 });
 
