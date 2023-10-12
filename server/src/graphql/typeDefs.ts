@@ -8,7 +8,7 @@ export const typeDefs = `#graphql
   # INPUTS
   # Read
   input GetSurveyInput {
-    id: String!
+    id: ID!
   }
 
   # Create
@@ -17,16 +17,21 @@ export const typeDefs = `#graphql
     questions: [QuestionInput]
   }
   input QuestionInput {
-    text: String!
+    text: ID!
     type: QuestionType!
     options: [String!]
   }
 
   # Update
   input UpdateSurveyInput {
-    id: String!
+    id: ID!
     title: String
     questions: [QuestionInput]
+  }
+
+  # Delete
+  input DeleteSurveyInput {
+    id: ID!
   }
 
   # PAYLOADS
@@ -49,6 +54,6 @@ export const typeDefs = `#graphql
   type Mutation {
     createSurvey(input: CreateSurveyInput!): Survey
     updateSurvey(input: UpdateSurveyInput): Survey
-    deleteSurvey(id: String): String
+    deleteSurvey(input: DeleteSurveyInput): String
   }
 `;

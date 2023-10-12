@@ -1,9 +1,11 @@
 import { Survey } from "../../../database/models/Survey.js";
 import { GraphQLError } from "graphql";
 
-export const deleteSurvey = async (_, args, context) => {
-  const { id } = args;
+export const deleteSurvey = async (_, { input }, context) => {
+  const { id } = input;
+
   const survey = await Survey.findByIdAndDelete(id);
-  if(!survey) throw new GraphQLError("Survey not found");
+  if (!survey) throw new GraphQLError("Survey not found");
+  
   return id;
 };
