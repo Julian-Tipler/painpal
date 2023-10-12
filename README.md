@@ -1,14 +1,17 @@
-run "npx expo start" to start the project
-
-Plan:
-**Backend**
-* Set up simple backend with firebase functions to handle API calls. This API will use AWS?
-
+"npx expo start"
 **Frontend**
-* Hosted with expo hosting
-* Set up Appolo client frontend (works with React native!)
-* Set up basic structure but don't style elements yet. Just set up basic positioning
+* Hosted with expo hosting (deploys to app store (testflight first) and play store)
+* Apollo client frontend (works with React native!)
+* Set up basic structure but don't style elements yet. Just set up basic positioning with text
 
+"npm run dev"
+**Backend**
+* Apollo server
+* Apollo's built in express server
+* Mongoose
+* MongoDB
+
+**Todo**
 - Decide what server hosting platform, helper libraries, and database to use.
   - Apollo server
     - using startStandaloneServer which uses express
