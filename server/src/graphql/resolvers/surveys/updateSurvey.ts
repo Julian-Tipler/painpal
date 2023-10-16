@@ -3,7 +3,7 @@ import { Survey } from "../../../database/models/Survey.js";
 
 export const updateSurvey = async (_, { input }, context) => {
   const { id } = input;
-  
+
   const survey = await Survey.findByIdAndUpdate(
     id,
     { ...input },
