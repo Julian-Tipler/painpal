@@ -8,7 +8,7 @@ export const updateSurvey = async (_, { input }, context) => {
     id,
     { ...input },
     { new: true }
-  );
+  ).populate("questions");
   if (!survey) throw new GraphQLError("Survey not updated");
 
   return survey;
