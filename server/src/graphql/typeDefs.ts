@@ -41,7 +41,7 @@ export const typeDefs = `#graphql
   }
   input CreateSurveyInput {
     title: String!
-    questions: [QuestionInput!]
+    questionsInput: [QuestionInput!]
   }
   input QuestionInput {
     text: String!

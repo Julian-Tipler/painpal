@@ -12,7 +12,19 @@ const usersSchema = new Schema({
   roles: {
     type: [String],
     required: true,
-  }
+  },
+  createdAt: {
+    type: Date,
+    immutable: true,
+    required: true,
+    default: Date.now(),
+  },
+  updatedAt: {
+    type: Date,
+    immutable: true,
+    required: true,
+    default: Date.now(),
+  },
 });
 
 export const User = model("User", usersSchema);

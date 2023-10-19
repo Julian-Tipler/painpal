@@ -3,45 +3,28 @@ import { Survey } from "../../../database/models/Survey.js";
 import { Question } from "../../../database/models/Question.js";
 import { startSession } from "mongoose";
 
-export const createSurvey = async (_, { input }, context) => {
-  const session = await startSession();
-  session.startTransaction();
+export const createSurvey = async (parent, { input }, context) => {
+  const userId = context.user.id;
+  const { title } = input;
+  const survey = new Survey({
+    title,
+    userId,
+  });
 
-  try {
-    let questions = [];
-    if (input.questions) {
-      await Promise.all(
-        input.questions.map(async (question) => {
-          const { text, type, options } = question;
-          const newQuestion = await Question.create([{ text, type, options }], {
-            session,
-          });
-          if (!newQuestion) {
-            throw new Error("Question not created");
-          }
-          questions.push(newQuestion[0]);
-        })
-      );
-    }
+  const questionPromises = input.questionsInput.map(async (questionInput) => {
+    const question = new Question({
+      ...questionInput,
+      surveyId: survey.id,
+    });
+    await question.save();
+    return question;
+  });
+  const newQuestions = await Promise.all(questionPromises);
 
-    const { user } = context;
-    const survey = await Survey.create(
-      [{ userId: user.id, ...input, questions: questions }],
-      {
-        session,
-      }
-    );
-    if (!survey) {
-      throw new Error("Survey not created");
-    }
+  survey.questions = newQuestions.map((question) => question.id);
+  await survey.save();
 
-    await session.commitTransaction();
-    session.endSession();
+  const newSurvey = await Survey.findById(survey.id).populate("questions");
 
-    return survey[0];
-  } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
-    throw error;
-  }
+  return newSurvey;
 };

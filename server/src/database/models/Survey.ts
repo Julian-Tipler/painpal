@@ -16,6 +16,18 @@ const surveySchema = new Schema({
       ref: "Question",
     },
   ],
+  createdAt: {
+    type: Date,
+    immutable: true,
+    required: true,
+    default: Date.now(),
+  },
+  updatedAt: {
+    type: Date,
+    immutable: true,
+    required: true,
+    default: Date.now(),
+  },
 });
 
 export const Survey = model("Survey", surveySchema);
