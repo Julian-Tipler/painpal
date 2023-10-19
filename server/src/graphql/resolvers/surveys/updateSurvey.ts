@@ -10,21 +10,6 @@ export const updateSurvey = async (_, { input }, context) => {
   session.startTransaction();
 
   try {
-    if (questions) {
-      questions.forEach(async (question) => {
-        try {
-          const newQuestion = await Question.findByIdAndUpdate(
-            question.id,
-            // { ...question },
-            // { new: true }
-          );
-          // if (!newQuestion) throw new GraphQLError("Question not updated");
-        } catch (error) {
-          console.log(error);
-        }
-      });
-    }
-
     const survey = await Survey.findByIdAndUpdate(
       id,
       { ...input },

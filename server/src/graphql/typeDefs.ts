@@ -51,7 +51,6 @@ export const typeDefs = `#graphql
   input UpdateSurveyInput {
     id: ID!
     title: String
-    questions: [UpdateQuestionInput!]
   }
   input UpdateQuestionInput {
     id: ID
