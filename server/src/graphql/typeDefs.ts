@@ -41,17 +41,16 @@ export const typeDefs = `#graphql
   }
   input CreateSurveyInput {
     title: String!
-    questions: [QuestionInput]
+    questionsInput: [QuestionInput!]
   }
   input QuestionInput {
-    text: ID!
+    text: String!
     type: QuestionType!
     options: [String!]!
   }
   input UpdateSurveyInput {
     id: ID!
     title: String
-    questions: [UpdateQuestionInput!]
   }
   input UpdateQuestionInput {
     id: ID
@@ -67,7 +66,7 @@ export const typeDefs = `#graphql
     id: ID!
     userId: ID!
     title: String!
-    questions: [Question]
+    questions: [Question!]
   }
   type Question {
     id: ID!

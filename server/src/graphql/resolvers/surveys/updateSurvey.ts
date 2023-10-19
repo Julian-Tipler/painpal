@@ -1,15 +1,26 @@
 import { GraphQLError } from "graphql";
 import { Survey } from "../../../database/models/Survey.js";
+import { Question } from "../../../database/models/Question.js";
+import { Types, startSession } from "mongoose";
 
 export const updateSurvey = async (_, { input }, context) => {
-  const { id } = input;
-  
-  const survey = await Survey.findByIdAndUpdate(
-    id,
-    { ...input },
-    { new: true }
-  );
-  if (!survey) throw new GraphQLError("Survey not updated");
+  const { id, questions } = input;
 
-  return survey;
+  const session = await startSession();
+  session.startTransaction();
+
+  try {
+    const survey = await Survey.findByIdAndUpdate(
+      id,
+      { ...input },
+      { new: true }
+    ).populate("questions");
+    if (!survey) throw new GraphQLError("Survey not updated");
+
+    return survey;
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    throw error;
+  }
 };
